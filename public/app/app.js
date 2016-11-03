@@ -30,5 +30,5 @@ angular.module('defaultApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimat
         templateUrl: 'views/secondpage.html'
       });
 
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/nav/home');
   });
