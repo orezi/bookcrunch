@@ -1,0 +1,10 @@
+<div ng-controller="homeCtrl" ng-init="signupCheck();">
+	<md-whiteframe class="md-whiteframe-7dp" flex layout layout-align="end center" style="height: 3em; margin-bottom: 7px;">
+	  <div style="width: 150px; margin-right: 50em;" ui-sref="nav.landing"><img src="../assets/images/logo-02.svg"></div>
+	  <div ng-if="firstname" id="username">Hello, {{ firstname}}</div>
+	  <md-button ng-if="firstname" style="margin-left: 20px;" class="md-raised" ng-click="logout();">Logout</md-button>
+    <md-button ng-if="!firstname" class="md-raised" ui-sref="nav.register">Register</md-button>
+    <md-button ng-if="!firstname" class="md-raised" ui-sref="nav.login">Login</md-button>
+  </md-whiteframe>
+  <div ui-view></div>
+</div>

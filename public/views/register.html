@@ -1,0 +1,46 @@
+<div class="form" ng-controller="homeCtrl">
+  <ul class="tab-group" layout="row">
+    <li class="tab active siin sii">Sign Up</li>
+    <li class="tab logs" ui-sref="nav.login">Log In</li>
+  </ul>
+  <div class="tab-content">
+    <div>
+      <h1>Sign Up for Free</h1>
+      <div>
+        <div class="top-row" layout="row">
+          <div class="field-wrap">
+            <label>
+              First Name<span class="req">*</span>
+            </label>
+            <input type="text" ng-model="newUser.firstname" required autocomplete="off" />
+          </div>
+          <div class="field-wrap" style="margin-left: 70px;">
+            <label>
+              Last Name<span class="req">*</span>
+            </label>
+            <input type="text" ng-model="newUser.lastname" required autocomplete="off" />
+          </div>
+        </div>
+        <div class="field-wrap" style="width: 36em;">
+          <label>
+            Email Address<span class="req">*</span>
+          </label>
+          <input type="email" ng-model="newUser.email" required autocomplete="off" />
+        </div>
+        <div class="field-wrap" style="width: 36em;">
+          <label>
+            Mobile number<span class="req">*</span>
+          </label>
+          <input type="email" ng-model="newUser.phoneNumber" required autocomplete="off" />
+        </div>
+        <div class="field-wrap" style="width: 36em;">
+          <label>
+            Set A Password<span class="req">*</span>
+          </label>
+          <input type="password" ng-model="newUser.password" required autocomplete="off" />
+        </div>
+        <button type="submit" class="button button-block" ng-click="signUp(newUser)"/>Get Started</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div ng-controller="homeCtrl" data-ng-init="loadSlideshow(); getAllBooks();">
+  <div class="clearfix colelem" id="slides">
+    <img src="../assets/images/banner_1.jpg">
+    <img src="../assets/images/banner_2.jpg">
+    <img src="../assets/images/banner_3.jpg">
+  </div>
+  <div class="content" layout layout-align="center center">
+    <span>A book is a dream that you hold in your hand</span>
+    <p style="font-size: 17px; margin-top: -2px;">-Neil Gaiman</p>
+  </div>
+  <div layout="row" class="book-container" layout-wrap>
+    <md-card md-theme-watch ng-repeat="book in books" id="card">
+      <md-card-content layout="row" layout-align="space-between">
+        <div class="md-media-lg card-media book-cover">
+          <a href="../app/pdf/web/viewer.html?File={{book.pdfName}}"><img src="{{book.coverImgUrl}}"></a>
+        </div>
+      </md-card-content>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">{{book.name}}</span>
+          <span class="md-subhead">by {{book.author}}</span>
+        </md-card-title-text>
+      </md-card-title>
+    </md-card>
+  </div>
+</div>
