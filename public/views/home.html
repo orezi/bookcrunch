@@ -11,8 +11,11 @@
   <div layout="row" class="book-container" layout-wrap>
     <md-card md-theme-watch ng-repeat="book in books" id="card">
       <md-card-content layout="row" layout-align="space-between">
-        <div class="md-media-lg card-media book-cover">
+        <div ng-if="firstname" class="md-media-lg card-media book-cover">
           <a href="../app/pdf/web/viewer.html?File={{book.pdfName}}"><img src="{{book.coverImgUrl}}"></a>
+        </div>
+        <div ng-if="!firstname" class="md-media-lg card-media book-cover" ui-sref="nav.login">
+          <img src="{{book.coverImgUrl}}"></a>
         </div>
       </md-card-content>
       <md-card-title style="text-align: center;">

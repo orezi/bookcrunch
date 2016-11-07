@@ -13,6 +13,9 @@ module.exports = function(app) {
   router.route('/authenticate')
     .post(user.authenticate);
 
+  router.route('/paid')
+    .put(user.verifyToken, user.updatePaidUser);
+
   router.route('/user')
     .get(user.verifyToken, user.getCurrentUser)
     .delete(user.verifyToken, user.deleteCurrentUser)

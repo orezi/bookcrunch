@@ -12,6 +12,27 @@
   font-size: medium;
 }
 
+.footer{
+  display: flex;
+  flex-direction: column;
+  color: #B3B3B3;
+  justify-content: space-around;
+  margin-top: 10em;
+  width: 80em;
+  height: 14em;
+  background-color: #112631;
+}
+#firstRow{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+#secRow{
+  display: flex;
+  justify-content: center;
+}
+
 .read {
   padding-top: 9px;
   border-style: solid;

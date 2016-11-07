@@ -118,6 +118,17 @@ UserController.prototype.updateCurrentUser = function(req, res) {
   });
 }
 
+UserController.prototype.updatePaidUser = function(req, res) {
+  User.findByIdAndUpdate(req.decoded._doc._id,{
+    $set: {
+      paid: true
+    }
+  }, function(err, user){
+    if (err) return (err);
+    res.send(user);
+  });
+}
+
 UserController.prototype.deleteCurrentUser = function(req, res) {
   User.remove({
     _id: req.decoded._doc._id
