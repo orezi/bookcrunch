@@ -15,10 +15,13 @@
           <a href="../app/pdf/web/viewer.html?File={{book.pdfName}}"><img src="{{book.coverImgUrl}}"></a>
         </div>
       </md-card-content>
-      <md-card-title>
+      <md-card-title style="text-align: center;">
         <md-card-title-text>
           <span class="md-headline">{{book.name}}</span>
           <span class="md-subhead">by {{book.author}}</span>
+          <span class="md-subhead free" ng-if="book.free==true">Free</span>
+          <span class="md-subhead free" ng-if="book.free==false">Premium</span>
+          <div class="read">Read</div>
         </md-card-title-text>
       </md-card-title>
     </md-card>

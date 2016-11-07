@@ -89,7 +89,6 @@ angular.module("defaultApp")
     $scope.getAllBooks = function() {
       BookService.getAllBooks().then(function(res) {
         $scope.books = res.data;
-        console.log("books", res.data);
       });
     };
 

@@ -21,6 +21,10 @@ var bookSchema = new Schema({
   },
   pdfName: {
     type: String
+  },
+  free: {
+    type: Boolean,
+    default: true
   }
 });
 

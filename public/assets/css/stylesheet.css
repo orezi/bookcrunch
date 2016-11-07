@@ -7,6 +7,26 @@
   line-height: 36px;
 }
 
+.free {
+  font-weight: 700;
+  font-size: medium;
+}
+
+.read {
+  padding-top: 9px;
+  border-style: solid;
+  width: 100px;
+  height: 29px;
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  margin-left: 56px;
+  margin-top: 15px;
+  border-width: 1px;
+  border-radius: 5px;
+  background: #A9A9A9;
+}
+
 .book-container {
   display: flex;
   justify-content: flex-start;
@@ -15,7 +35,7 @@
   margin-left: 7em;
 }
 
-.username{
+.username {
   font-weight: 600;
   font-family: 'Helvetica'
 }
