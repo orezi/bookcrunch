@@ -8,18 +8,11 @@
       <h1>Welcome Back!</h1>
       <div>
         <div class="field-wrap">
-          <label>
-            Email Address<span class="req">*</span>
-          </label>
-          <input type="email" ng-model="user.email" required autocomplete="off" />
+          <input type="email" placeholder="Email" class="req" ng-model="user.email" required autocomplete="off" />
         </div>
         <div class="field-wrap">
-          <label>
-            Password<span class="req">*</span>
-          </label>
-          <input type="password" ng-model="user.password" required autocomplete="off" />
+          <input type="password" placeholder="Password" class="req" ng-model="user.password" required autocomplete="off" />
         </div>
-        <p class="forgot"><a href="#">Forgot Password?</a></p>
         <button class="button button-block" ng-click="loginUser(user)"/>Log In</button>
       </div>
     </div>
