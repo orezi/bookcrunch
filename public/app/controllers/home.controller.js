@@ -53,6 +53,11 @@ angular.module("defaultApp")
             $scope.progressLoad = false;
             $scope.isLoggedIn = true;
             $scope.userInformation = res.data.user;
+            $mdToast.show(
+              $mdToast.simple()
+              .content("Login successful!")
+              .hideDelay(3000)
+            );
             $location.url("/nav/home");
             window.location.reload()
           }
@@ -81,6 +86,11 @@ angular.module("defaultApp")
           $scope.userDetails = res;
           $scope.progressLoad = false;
           $scope.isNewUser = true;
+          $mdToast.show(
+            $mdToast.simple()
+            .content("Sign up complete!")
+            .hideDelay(3000)
+          );
           $location.url("/nav/home");
         }
       });
