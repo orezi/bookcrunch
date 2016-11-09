@@ -1,12 +1,12 @@
-<div ng-controller="homeCtrl" ng-init="signupCheck();">
+<div ng-controller="homeCtrl" ng-init="signupCheck(); getCurrentUser();">
   <md-whiteframe class="md-whiteframe-7dp" flex layout layout-align="end center" style="height: 3em; margin-bottom: 7px;">
     <div style="width: 150px; margin-right: 43em;" ui-sref="nav.landing"><img src="../assets/images/logo-02.svg"></div>
     <div ng-if="firstname" id="username">Hello, {{ firstname}}</div>
     <form method='POST' action='https://voguepay.com/pay/'>
-      <input type='hidden' name='v_merchant_id' value='9002-0043668' />
+      <input type='hidden' name='v_merchant_id' value='demo' />
       <input type='hidden' name='memo' value='Bookcrunch Premium account' />
       <input type='hidden' name='total' value='500' />
-      <md-button ng-if="firstname" type="submit" alt='Submit' style="margin-left: 20px;" class="md-raised md-primary">Go Premium</md-button>
+      <md-button ng-if="firstname && userDetails.paid==false " type="submit" alt='Submit' style="margin-left: 20px;" class="md-raised md-primary">Go Premium</md-button>
     </form>
     <md-button ng-if="firstname" style="margin-left: 20px;" class="md-raised" ng-click="logout();">Logout</md-button>
     <md-button ng-if="!firstname" class="md-raised" ui-sref="nav.register">Register</md-button>

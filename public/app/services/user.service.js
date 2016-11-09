@@ -28,6 +28,10 @@ angular.module("defaultApp")
         var token = localStorage.getItem('userToken');
         return $http.get("/api/user?token=" + token);
       },
+      pay: function() {
+        var token = localStorage.getItem('userToken');
+        return $http.put("/api/paid?token=" + token);
+      },
 
       login: function(param) {
         return $http.post("/api/authenticate", param);

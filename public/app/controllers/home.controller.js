@@ -24,6 +24,18 @@ angular.module("defaultApp")
         }
       });
     }
+    $scope.pay = function(){
+      UserService.pay().then(function(res){
+        $scope.update = res;
+      });
+    };
+
+    $scope.getCurrentUser = function(){
+      UserService.getCurrentUser().then(function(res){
+        $scope.userDetails = res.data;
+      });
+    };
+
     $scope.loginUser = function(userData) {
       UserService.login(userData).then(function(res) {
         $scope.progressLoad = true;
