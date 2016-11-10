@@ -1,6 +1,6 @@
 "use strict";
 angular.module("defaultApp")
-  .controller("homeCtrl", ["$scope", "$state", "$rootScope", "$mdToast", "$stateParams", "UserService", "BookService", "$location", function($scope, $state, $rootScope, $mdToast, $stateParams, UserService, BookService, $location) {
+  .controller("homeCtrl", ["$scope", "$state", "$mdDialog", "$rootScope", "$mdToast", "$stateParams", "UserService", "BookService", "$location", function($scope, $state, $mdDialog, $rootScope, $mdToast, $stateParams, UserService, BookService, $location) {
     $scope.loadSlideshow = function() {
       $("#slides").slidesjs({
         width: 1024,
@@ -24,14 +24,35 @@ angular.module("defaultApp")
         }
       });
     }
-    $scope.pay = function(){
-      UserService.pay().then(function(res){
+    $scope.pay = function() {
+      UserService.pay().then(function(res) {
         $scope.update = res;
       });
     };
 
-    $scope.getCurrentUser = function(){
-      UserService.getCurrentUser().then(function(res){
+    //confirm before deleting account
+    $scope.showConfirmDelete = function(ev) {
+      var confirm = $mdDialog.confirm()
+        .title("You are about to delete your account")
+        .content("This will remove all your details and revoke ability to read books here. Are you sure you want to delete your account?")
+        .ariaLabel("Lucky day")
+        .targetEvent(ev)
+        .ok("Yes")
+        .cancel("Cancel");
+      $mdDialog.show(confirm).then(function() {
+        $scope.deleteAccount();
+      });
+    };
+
+    $scope.deleteAccount = function() {
+      UserService.deleteUser().then(function(res) {
+        localStorage.removeItem("userToken")
+        window.location.reload();
+      });
+    };
+
+    $scope.getCurrentUser = function() {
+      UserService.getCurrentUser().then(function(res) {
         $scope.userDetails = res.data;
       });
     };
@@ -103,7 +124,7 @@ angular.module("defaultApp")
             .content("Sign up complete!")
             .hideDelay(3000)
           );
-          $location.url("/nav/home");
+          $location.url("/nav/login");
         }
       });
     };
