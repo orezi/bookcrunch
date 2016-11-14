@@ -20,6 +20,7 @@
     "method-override": "^2.3.5",
     "mongoose": "^4.4.10",
     "morgan": "^1.7.0",
+    "nodemailer": "^2.6.4",
     "nodemon": "^1.9.1",
     "path": "^0.12.7"
   }

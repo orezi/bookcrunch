@@ -16,6 +16,15 @@ module.exports = function(app) {
   router.route('/paid')
     .put(user.verifyToken, user.updatePaidUser);
 
+  router.route('/sendMail')
+    .post(user.verifyToken, user.sendWelcomeMail);
+  
+  router.route('/sendVerifyEmail')
+    .post(user.sendVerifyMail);
+
+  router.route('/verifyUser/:userId')
+    .put(user.verifyUser);
+
   router.route('/user')
     .get(user.verifyToken, user.getCurrentUser)
     .delete(user.verifyToken, user.deleteCurrentUser)

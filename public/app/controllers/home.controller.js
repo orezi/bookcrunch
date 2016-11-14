@@ -30,6 +30,12 @@ angular.module("defaultApp")
       });
     };
 
+    $scope.verifyUser = function(){
+      UserService.verifyUser($stateParams.user_id).success(function(res) {
+        $scope.verified = res;
+      });
+    }
+
     //confirm before deleting account
     $scope.showConfirmDelete = function(ev) {
       var confirm = $mdDialog.confirm()

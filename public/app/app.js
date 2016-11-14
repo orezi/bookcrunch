@@ -25,6 +25,11 @@ angular.module('defaultApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimat
         templateUrl: 'views/login.html',
         controller: 'homeCtrl'
       })
+      .state('nav.verify', {
+        url: '/verify/:user_id',
+        templateUrl: 'views/verify.html',
+        controller: 'homeCtrl'
+      })
       .state('nav.second', {
         url: '/second',
         templateUrl: 'views/secondpage.html'

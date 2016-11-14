@@ -57,7 +57,9 @@ angular.module("defaultApp")
         var token = localStorage.getItem("userToken");
         return $http.delete("/api/user?token=" + token);
       },
-
+      verifyUser: function(id){
+        return $http.put("/api/verifyUser/" + id);
+      },
       updateUser: function(userObj) {
         var token = localStorage.getItem("userToken");
         return $http.put("/api/user?token=" + token, userObj);

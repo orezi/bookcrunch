@@ -27,6 +27,10 @@ var userSchema = new Schema({
   paid: {
     type: Boolean,
     default: false
+  },
+  verified: {
+    type: Boolean,
+    default: false
   }
 });
 

@@ -5,6 +5,7 @@ var User = mongoose.model('User');
 var jwt = require('jsonwebtoken');
 var config = require('../../config/db');
 var session = ('express-session');
+var nodemailer = require('nodemailer');
 
 var UserController = function() {}
 
@@ -60,6 +61,104 @@ UserController.prototype.authenticate = function(req, res) {
   });
 };
 
+UserController.prototype.verifyUser = function(req, res) {
+  User.findByIdAndUpdate(req.params.userId, {
+    $set: {
+      verified: true
+    }
+  }, function(err, user) {
+    if (err) {
+      return res.json(err);
+    }
+    UserController.prototype.sendWelcomeMail(req, res);
+    return res.json(user);
+  });
+}
+
+UserController.prototype.sendWelcomeMail = function(req, res) {
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'physiocraft.noreply@gmail.com',
+      pass: '#Physio.noreply'
+    }
+  });
+  var userId = req.params.userId;
+  User.findOne({
+    _id: userId
+  }, function(err, user) {
+    if (err) {
+      return res.json(err);
+    }
+    if (user) {
+      var mailOptions = {
+        from: 'Bookcrunch ✔ <no-reply@bookcrunch.com>',
+        to: user.email,
+        subject: 'Welcome to Bookcrunch',
+        text: 'Welcome Email',
+        html: '<b> Hello ' + user.firstname + ',\n' +
+          'Welcome to bookcrunch! \n' +
+          'Your Account details are as follows: \n' +
+          'Username: ' + user.firstname + '\n' +
+          'Find your books and start reading <a href="https://bookcrunch.herokuapp.com"> here</a>\n' +
+          'Enjoy! \n' +
+          'The Aegea Team'
+      };
+      transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('message sent: ' + info);
+        }
+      });
+    }
+  })
+};
+
+UserController.prototype.sendVerifyMail = function(req, res) {
+  var transporter = nodemailer.createTransport({
+    service: 'Gmail',
+    auth: {
+      user: 'physiocraft.noreply@gmail.com',
+      pass: '#Physio.noreply'
+    }
+  });
+  User.findOne({
+    email: req.body.email
+  }, function(err, user) {
+    if (err) {
+      return res.json(err)
+    } else if (!user) {
+      console.log("no user");
+      res.json({
+        success: false,
+        message: 'No user found'
+      });
+    } else {
+      var mailOptions = {
+        from: 'Bookcrunch ✔ <no-reply@bookcrunch.com>',
+        to: user.email,
+        subject: 'Verify Email',
+        text: 'Sign up almost complete',
+        html: "<b> Hello " + user.firstname + ",\n Thank you for signing up to Bookcrunch! \n" +
+          "Congratulations! Now you are registered on <a href='https://bookcrunch.herokuapp.com'>bookcrunch.com.ng</a> \n" +
+          "please, confirm your email by clicking the link below \n" +
+          "https://bookcrunch.herokuapp.com/#/nav/verify/" + user._id + "\n" +
+          "Please, do not reply to this email. \n" +
+          "Thanks for using Bookcrunch \n" +
+          "The Aegea Team"
+      };
+      transporter.sendMail(mailOptions, function(error, info) {
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('message sent: ' + info);
+        }
+      });
+    }
+  })
+};
+
 UserController.prototype.createUser = function(req, res) {
   if (!req.body.firstname || !req.body.lastname || !req.body.email || !req.body.password) {
     res.json({
@@ -82,7 +181,8 @@ UserController.prototype.createUser = function(req, res) {
         if (err) {
           return res.json(err);
         }
-        return res.json(user);
+        UserController.prototype.sendVerifyMail(req, res);
+        res.send(user);
       });
     }
   });
@@ -119,11 +219,11 @@ UserController.prototype.updateCurrentUser = function(req, res) {
 }
 
 UserController.prototype.updatePaidUser = function(req, res) {
-  User.findByIdAndUpdate(req.decoded._doc._id,{
+  User.findByIdAndUpdate(req.decoded._doc._id, {
     $set: {
       paid: true
     }
-  }, function(err, user){
+  }, function(err, user) {
     if (err) return (err);
     res.send(user);
   });
