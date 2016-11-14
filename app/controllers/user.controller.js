@@ -30,11 +30,15 @@ UserController.prototype.authenticate = function(req, res) {
   }).exec(function(err, user) {
     if (err)
       return res.json(err);
-
     if (!user) {
       res.json({
         success: false,
         message: 'Authentication failed. User not found.'
+      });
+    } else if(user.verified == false){
+      res.json({
+        success: false,
+        message: 'User not verified.'
       });
     } else if (req.body.password) {
       var validPassword = user.comparePassword(req.body.password);
@@ -129,7 +133,6 @@ UserController.prototype.sendVerifyMail = function(req, res) {
     if (err) {
       return res.json(err)
     } else if (!user) {
-      console.log("no user");
       res.json({
         success: false,
         message: 'No user found'

@@ -75,6 +75,14 @@ angular.module("defaultApp")
           );
           $scope.progressLoad = false;
           $scope.isLoggedIn = false;
+        } else if(res.data.message === "User not verified."){
+          $mdToast.show(
+            $mdToast.simple()
+            .content("Email yet to be verified")
+            .hideDelay(5000)
+          );
+          $scope.progressLoad = false;
+          $scope.isLoggedIn = false;
         } else if (res.data.message === "Authentication failed.") {
           $mdToast.show(
             $mdToast.simple()
@@ -127,7 +135,7 @@ angular.module("defaultApp")
           $scope.isNewUser = true;
           $mdToast.show(
             $mdToast.simple()
-            .content("Sign up complete!")
+            .content("Check email for verification!")
             .hideDelay(3000)
           );
           $location.url("/nav/login");
