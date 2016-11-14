@@ -83,8 +83,8 @@ UserController.prototype.sendWelcomeMail = function(req, res) {
   var transporter = nodemailer.createTransport({
     service: 'Gmail',
     auth: {
-      user: 'physiocraft.noreply@gmail.com',
-      pass: '#Physio.noreply'
+      user: 'bookcrunch.noreply@gmail.com',
+      pass: '#Bookcrunch.noreply'
     }
   });
   var userId = req.params.userId;
