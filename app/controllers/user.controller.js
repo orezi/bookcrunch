@@ -144,10 +144,10 @@ UserController.prototype.sendVerifyMail = function(req, res) {
         to: user.email,
         subject: 'Verify Email',
         text: 'Sign up almost complete',
-        html: "<div style='background: #E8F8DF; width: 58em; height: 17em; padding: 3em'>Hello " + user.firstname + ",<br><br> Thank you for signing up to Bookcrunch! <br><br>" +
+        html: "<div style='background: #E8F8DF; width: 46em; height: 17em; padding: 3em; padding-left: 9em;'>Hello " + user.firstname + ",<br><br> Thank you for signing up to Bookcrunch! <br><br>" +
           "Congratulations! Now you are registered on <a href='https://bookcrunch.herokuapp.com'>bookcrunch.com.ng</a> <br>" +
           "please, confirm your email by clicking the link below <br><br>" +
-          "http://localhost:8080/#/nav/verify/" + user._id + "<br><br>" +
+          "http://bookcrunch.herokuapp.com/#/nav/verify/" + user._id + "<br>" +
           "<b> Never disclose your personal account password to anyone!</b><br>" +
           "Please, do not reply to this email. <br>" +
           "Thanks for using Bookcrunch <br>" +
