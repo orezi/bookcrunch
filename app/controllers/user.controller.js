@@ -149,7 +149,7 @@ UserController.prototype.sendVerifyMail = function(req, res) {
         html: "<div style='background: #E8F8DF; width: 46em; height: 17em; padding: 3em; padding-left: 9em;'>Hello " + user.firstname + ",<br><br> Thank you for signing up to Bookcrunch! <br><br>" +
           "Congratulations! Now you are registered on <a href='https://bookcrunch.herokuapp.com'>bookcrunch.com.ng</a> <br>" +
           "please, confirm your email by clicking the link below <br><br>" +
-          "http://bookcrunch.herokuapp.com/#/nav/verify/" + user._id + "<br>" +
+          "https://bookcrunch.herokuapp.com/#/nav/verify/" + user._id + "<br>" +
           "<b> Never disclose your personal account password to anyone!</b><br>" +
           "Please, do not reply to this email. <br>" +
           "Thanks for using Bookcrunch <br>" +
@@ -318,7 +318,7 @@ UserController.prototype.forgotPass = function(req, res, next) {
         from: 'Bookcrunch ✔ <no-reply@bookcrunch.com>',
         subject: 'Account Password Reset',
         text: 'You are receiving this because you (or someone else) has requested the reset of the password for your account.\n\n' +
-          'Please click on the following link, or paste this into your browser to complete the process:\n\n' + '\n\n' + 'http://bookcrunch.herokuapp.com/#/nav/passwordreset/' + token + '\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' + '\n\n' + 'https://bookcrunch.herokuapp.com/#/nav/passwordreset/' + token + '\n\n' +
           ' If you did not request this, please ignore this email and your password will remain unchanged.\n'
       };
       transporter.sendMail(mailOptions, function(err, res) {
