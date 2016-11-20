@@ -9,7 +9,7 @@
     <p style="font-size: 17px; margin-top: -2px;">-Neil Gaiman</p>
   </div>
   <div layout="row" style="display: flex; justify-content: space-between; margin-right: 9em;">
-    <md-input-container  flex="20" style="margin-left: 8em;">
+    <md-input-container flex="20" style="margin-left: 8em;">
       <label>All books</label>
       <md-select ng-model="book">
         <md-option ng-repeat="book in books | orderBy:'+name'" value="{{book.name}}">{{book.name}}</md-option>
@@ -20,25 +20,29 @@
       <input type="text" ng-model="find.name">
     </md-input-container>
   </div>
-  <div layout="row" class="book-container" layout-wrap>
-    <md-card md-theme-watch ng-repeat="book in books | filter: find" id="card">
-      <md-card-content layout="row" layout-align="space-between">
-        <div ng-if="firstname" class="md-media-lg card-media book-cover">
-          <a href="../app/pdf/web/viewer.html?File={{book.pdfName}}"><img src="{{book.coverImgUrl}}"></a>
-        </div>
-        <div ng-if="!firstname" class="md-media-lg card-media book-cover" ui-sref="nav.login">
-          <img src="{{book.coverImgUrl}}"></a>
-        </div>
-      </md-card-content>
-      <md-card-title style="text-align: center; width: 14em;">
-        <md-card-title-text>
-          <span class="md-headline">{{book.name}}</span>
-          <span class="md-subhead">by {{book.author}}</span>
-          <span class="md-subhead free" ng-if="book.free==true">Free</span>
-          <span class="md-subhead free" ng-if="book.free==false">Premium</span>
-          <div class="read">Read</div>
-        </md-card-title-text>
-      </md-card-title>
-    </md-card>
+  <div>
+    <ul layout="row" class="book-container" layout-wrap>
+      <li ng-repeat="book in books | filter: find" id="card" ng-mouseover="hoverIn()" ng-mouseleave="hoverOut()">
+        <md-card md-theme-watch>
+          <md-card-content layout="row" layout-align="space-between">
+            <div ng-if="firstname" class="md-media-lg card-media book-cover">
+              <a href="../app/pdf/web/viewer.html?File={{book.pdfName}}"><img src="{{book.coverImgUrl}}"></a>
+            </div>
+            <div ng-if="!firstname" class="md-media-lg card-media book-cover" ui-sref="nav.login">
+              <img src="{{book.coverImgUrl}}"></a>
+            </div>
+          </md-card-content>
+          <md-card-title ng-show="hoverEdit" class="animate-show">
+            <md-card-title-text>
+              <span class="md-headline">{{book.name}}</span>
+              <span class="md-subhead">by {{book.author}}</span>
+              <span class="md-subhead free" ng-if="book.free==true">Free</span>
+              <span class="md-subhead free" ng-if="book.free==false">Premium</span>
+              <div class="read">Read</div>
+            </md-card-title-text>
+          </md-card-title>
+        </md-card>
+      </li>
+    </ul>
   </div>
 </div>

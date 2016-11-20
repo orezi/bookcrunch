@@ -36,6 +36,14 @@ angular.module("defaultApp")
       });
     }
 
+    $scope.hoverIn = function() {
+      this.hoverEdit = true;
+    };
+
+    $scope.hoverOut = function() {
+      this.hoverEdit = false;
+    };
+
     $scope.passwordReset = function(password) {
       if ($scope.password1 === $scope.password2) {
         UserService.passwordReset($stateParams.token, { 'password': password }).success(function(res) {
@@ -44,7 +52,7 @@ angular.module("defaultApp")
             $mdToast.simple()
             .content("Password changed! Redirecting to login...")
             .hideDelay(4000)
-          ).then(function(res){
+          ).then(function(res) {
             $location.url("/nav/login");
           })
         });
