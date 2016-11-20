@@ -30,11 +30,33 @@ angular.module("defaultApp")
       });
     };
 
-    $scope.verifyUser = function(){
+    $scope.verifyUser = function() {
       UserService.verifyUser($stateParams.user_id).success(function(res) {
         $scope.verified = res;
       });
     }
+
+    $scope.passwordReset = function(password) {
+      if ($scope.password1 === $scope.password2) {
+        UserService.passwordReset($stateParams.token, { 'password': password }).success(function(res) {
+          $scope.passReset = true;
+          $mdToast.show(
+            $mdToast.simple()
+            .content("Password changed! Redirecting to login...")
+            .hideDelay(4000)
+          ).then(function(res){
+            $location.url("/nav/login");
+          })
+        });
+      } else if ($scope.password2 && $scope.password1) {
+        $mdToast.show(
+          $mdToast.simple()
+          .content("Password Mismatch!")
+          .hideDelay(4000)
+        );
+      }
+    };
+
 
     //confirm before deleting account
     $scope.showConfirmDelete = function(ev) {
@@ -75,10 +97,10 @@ angular.module("defaultApp")
           );
           $scope.progressLoad = false;
           $scope.isLoggedIn = false;
-        } else if(res.data.message === "User not verified."){
+        } else if (res.data.message === "User not verified.") {
           $mdToast.show(
             $mdToast.simple()
-            .content("Email yet to be verified")
+            .content("Email yet to be verified. Please click link sent to email upon registration.")
             .hideDelay(5000)
           );
           $scope.progressLoad = false;
@@ -135,8 +157,8 @@ angular.module("defaultApp")
           $scope.isNewUser = true;
           $mdToast.show(
             $mdToast.simple()
-            .content("Check email for verification!")
-            .hideDelay(3000)
+            .content("Check email for verification link before you continue!")
+            .hideDelay(9000)
           );
           $location.url("/nav/login");
         }
@@ -173,4 +195,34 @@ angular.module("defaultApp")
       }
       $rootScope.signedIn = false;
     };
+
+    $scope.showPrompt = function(ev) {
+      var confirm = $mdDialog.prompt()
+        .title('Forgot password')
+        .textContent('Insert your email for password reset link to be sent to.')
+        .placeholder('Email')
+        .ariaLabel('Dog name')
+        .targetEvent(ev)
+        .ok('Send link!')
+        .cancel('Cancel');
+
+      $mdDialog.show(confirm).then(function(result) {
+        $scope.status = 'Check ' + result + 'for password reset link';
+        $scope.sendForgotPassEmail(result);
+      }, function() {
+        $scope.status = 'Cancelled!';
+      });
+    };
+
+    $scope.sendForgotPassEmail = function(result) {
+      UserService.forgotPassword(result).then(function(res) {
+        $scope.result = res;
+        $mdToast.show(
+          $mdToast.simple()
+          .content("Check your email for reset link!")
+          .hideDelay(8000)
+        );
+      });
+    };
+
   }]);

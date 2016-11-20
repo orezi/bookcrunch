@@ -6,6 +6,8 @@ var jwt = require('jsonwebtoken');
 var config = require('../../config/db');
 var session = ('express-session');
 var nodemailer = require('nodemailer');
+var waterfall = require('async-waterfall');
+var crypto = require('crypto');
 
 var UserController = function() {}
 
@@ -276,5 +278,122 @@ UserController.prototype.verifyToken = function(req, res, next) {
     });
 
   }
+};
+
+UserController.prototype.forgotPass = function(req, res, next) {
+  waterfall([
+    function(done) {
+      crypto.randomBytes(20, function(err, buf) {
+        var token = buf.toString('hex');
+        done(err, token);
+      });
+    },
+    function(token, done) {
+      User.findOne({
+        email: req.body.email
+      }, function(err, user) {
+        if (!user) {
+          return res.json({
+            message: 'No user found'
+          });
+        } else {
+          user.resetPasswordToken = token;
+          user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+          user.save(function(err) {
+            done(err, token, user);
+          });
+        }
+      });
+    },
+    function(token, user, done) {
+      var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'bookcrunch.noreply@gmail.com',
+          pass: '#Bookcrunch.noreply'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'Bookcrunch ✔ <no-reply@bookcrunch.com>',
+        subject: 'Account Password Reset',
+        text: 'You are receiving this because you (or someone else) has requested the reset of the password for your account.\n\n' +
+          'Please click on the following link, or paste this into your browser to complete the process:\n\n' + '\n\n' + 'http://bookcrunch.herokuapp.com/#/nav/passwordreset/' + token + '\n\n' +
+          ' If you did not request this, please ignore this email and your password will remain unchanged.\n'
+      };
+      transporter.sendMail(mailOptions, function(err, res) {
+        if (err) {
+          console.log(err);
+        }
+        done(err);
+        return res;
+      });
+    }
+  ], function(err) {
+    if (err) {
+      return next(err);
+    }
+    res.json({
+      message: 'Message Sent!'
+    });
+  });
+};
+
+
+UserController.prototype.resetPass = function(req, res) {
+  waterfall([
+    function(done) {
+      User.findOne({
+        resetPasswordToken: req.params.token,
+        resetPasswordExpires: {
+          $gt: Date.now()
+        }
+      }, function(err, user) {
+        if (!user) {
+          return res.json({
+            'message': 'User does not exist'
+          });
+        }
+
+        user.password = req.body.password;
+        user.resetPasswordToken = undefined;
+        user.resetPasswordExpires = undefined;
+
+        user.save(function(err, result) {
+          if (err) {
+            return res.json(err);
+          }
+          res.json(result);
+        });
+      });
+    },
+    function(user, done) {
+      var transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: {
+          user: 'bookcrunch.noreply@gmail.com',
+          pass: '#Bookcrunch.noreply'
+        }
+      });
+      var mailOptions = {
+        to: user.email,
+        from: 'Bookcrunch ✔ <no-reply@bookcrunch.com>',
+        subject: 'Your password has been changed',
+        text: 'Hello,\n\n' +
+          'This is a confirmation that the password for your account ' + user.email + ' has just been changed.\n'
+      };
+      transporter.sendMail(mailOptions, function(err) {
+        if (err) {
+          console.log(err);
+        }
+        done(err);
+      });
+    }
+  ], function(err) {
+    if (err) return err;
+    res.json({
+      message: 'Password changed!'
+    });
+  });
 };
 module.exports = UserController;

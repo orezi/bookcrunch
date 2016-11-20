@@ -30,6 +30,11 @@ angular.module('defaultApp', ['ui.router', 'ngMaterial', 'ngMessages', 'ngAnimat
         templateUrl: 'views/verify.html',
         controller: 'homeCtrl'
       })
+      .state('nav.passwordreset', {
+        url: '/passwordreset/:token',
+        templateUrl: 'views/passwordreset.html',
+        controller: 'homeCtrl'
+      })
       .state('nav.second', {
         url: '/second',
         templateUrl: 'views/secondpage.html'

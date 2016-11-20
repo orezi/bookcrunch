@@ -3,7 +3,7 @@
     <div style="width: 150px; margin-right: 45em;" ui-sref="nav.landing"><img src="../assets/images/logo-02.svg"></div>
     <div ng-if="firstname" id="username"> 
       <span style="margin-top: 7px;">Hello, {{ firstname}}</span>
-      <md-menu-bar style="margin-left: -35px;">
+      <md-menu-bar style="margin-left: -35px; margin-right: 2em">
         <md-menu>
           <a>
             <md-button class="md-icon-button" aria-label="More" ng-click="$mdOpenMenu()">
@@ -26,12 +26,6 @@
         </md-menu>
       </md-menu-bar>
     </div>
-    <form method='POST' action='https://voguepay.com/pay/'>
-      <input type='hidden' name='v_merchant_id' value='demo' />
-      <input type='hidden' name='memo' value='Bookcrunch Premium account' />
-      <input type='hidden' name='total' value='500' />
-      <md-button ng-if="firstname && userDetails.paid==false " type="submit" alt='Submit' style="margin-left: 20px; margin-right: 40px;" class="md-raised md-primary">Go Premium</md-button>
-    </form>
     <md-button ng-if="!firstname" class="md-raised" ui-sref="nav.register">Register</md-button>
     <md-button ng-if="!firstname" class="md-raised" ui-sref="nav.login">Login</md-button>
   </md-whiteframe>

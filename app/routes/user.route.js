@@ -21,6 +21,12 @@ module.exports = function(app) {
   
   router.route('/sendVerifyEmail')
     .post(user.sendVerifyMail);
+  
+  router.route('/forgotPass')
+    .post(user.forgotPass);
+
+  router.route('/reset/:token')
+    .post(user.resetPass);
 
   router.route('/verifyUser/:userId')
     .put(user.verifyUser);

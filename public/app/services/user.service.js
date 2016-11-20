@@ -41,6 +41,14 @@ angular.module("defaultApp")
         return $http.post("/api/users", newUser);
       },
 
+      passwordReset: function(token, password) {
+        return $http.post("/api/reset/" + token, password);
+      },
+
+      forgotPassword: function(email) {
+        return $http.post("/api/forgotPass", {email:email});
+      },
+
       decodeUser: function() {
         if (localStorage.getItem("userToken")) {
           var token = localStorage.getItem("userToken");
